@@ -1,0 +1,10 @@
+{
+  "name": "Rust",
+  "image": "mcr.microsoft.com/devcontainers/rust:1",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [8080],
+  "postCreateCommand": "if [ -f Cargo.toml ]; then cargo build; fi"
+}

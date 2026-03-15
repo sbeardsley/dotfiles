@@ -1,0 +1,10 @@
+{
+  "name": "Go",
+  "image": "mcr.microsoft.com/devcontainers/go:1.22",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [8080],
+  "postCreateCommand": "if [ -f go.mod ]; then go mod download; fi"
+}

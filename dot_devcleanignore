@@ -1,0 +1,19 @@
+# Secrets & env files
+.env
+.env.*
+.env.local
+.dev.vars
+
+# Local config
+*.local
+
+# Snapshots & data
+.snapshot
+
+# devenv / direnv
+.devenv
+.direnv
+
+# Python venvs (saves a slow rebuild)
+.venv
+venv

@@ -1,0 +1,13 @@
+{
+  "name": "Node.js",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [3000, 5173],
+  "postCreateCommand": "if [ -f package.json ]; then npm install; fi",
+  "remoteEnv": {
+    "NODE_ENV": "development"
+  }
+}

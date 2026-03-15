@@ -1,0 +1,103 @@
+# =============================================================================
+# fpath — all additions before compinit
+# =============================================================================
+fpath=($HOME/.docker/completions $fpath)
+fpath=($HOME/completions $fpath)
+
+# =============================================================================
+# completions — initialize once, after all fpath additions
+# =============================================================================
+autoload -Uz compinit
+compinit
+
+# =============================================================================
+# environment
+# =============================================================================
+export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+export ENABLE_LSP_TOOLS=1
+export CC_TOOLKIT_DIR="$HOME/cc-toolkit"
+
+# =============================================================================
+# path
+# =============================================================================
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
+export PATH="$HOME/.lmstudio/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# =============================================================================
+# plugins (antigen)
+# =============================================================================
+source "$(brew --prefix antigen)/share/antigen/antigen.zsh"
+source "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
+
+antigen bundle git
+antigen bundle pip
+antigen bundle command-not-found
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen apply
+
+# =============================================================================
+# prompt
+# =============================================================================
+eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/themes/M365Princess.omp.json")"
+
+# =============================================================================
+# aliases
+# =============================================================================
+alias h2='$(npm prefix -s)/node_modules/.bin/shopify hydrogen'
+alias vault='cd "$HOME/the-stack" && claude'
+alias peon="bash $HOME/.claude/hooks/peon-ping/peon.sh"
+
+# =============================================================================
+# sources
+# =============================================================================
+source "$CC_TOOLKIT_DIR/shell-aliases.sh"
+source "$HOME/.config/broot/launcher/bash/br"
+[[ -f "$HOME/.claude/hooks/peon-ping/completions.bash" ]] && \
+  source "$HOME/.claude/hooks/peon-ping/completions.bash"
+
+# =============================================================================
+# functions
+# =============================================================================
+
+# git clean respecting .devcleanignore
+devclean() {
+  local args=()
+  for f in "$HOME/.devcleanignore" .devcleanignore; do
+    [[ -f "$f" ]] || continue
+    while IFS= read -r line; do
+      [[ -z "$line" || "$line" == \#* ]] && continue
+      args+=(-e "$line")
+    done < "$f"
+  done
+  git clean -xfd "${args[@]}" "$@"
+}
+
+# spin up a devcontainer template
+devc() {
+  local template="${1:?Usage: devc <template> [command]}"
+  local cmd="${2:-bash}"
+  local config="$HOME/.devcontainers/$template/devcontainer.json"
+  if [[ ! -f "$config" ]]; then
+    echo "No template found: $template"
+    echo "Available: $(ls $HOME/.devcontainers/)"
+    return 1
+  fi
+  devcontainer up --workspace-folder . --config "$config"
+  devcontainer exec --workspace-folder . --config "$config" "$cmd"
+}
+
+# =============================================================================
+# tools
+# =============================================================================
+eval "$(zoxide init zsh)"

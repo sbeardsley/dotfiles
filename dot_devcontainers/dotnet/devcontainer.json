@@ -1,0 +1,10 @@
+{
+  "name": ".NET",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [5000, 5001],
+  "postCreateCommand": "if [ -f *.sln ] || [ -f *.csproj ]; then dotnet restore; fi"
+}

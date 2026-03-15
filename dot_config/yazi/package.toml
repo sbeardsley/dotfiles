@@ -1,0 +1,14 @@
+[[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "0e56060"
+hash = "ab2e66065a94cca4886b303518e44bd8"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "b224ddf"
+hash = "384464b6df8cb807425c521f8cd790f3"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "3001521"
+hash = "8eabb4e88096f10905a6df62cfaadbf4"
