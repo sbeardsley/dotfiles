@@ -1,0 +1,8 @@
+{{- $devcontainer := env "REMOTE_CONTAINERS" | not | not -}}
+
+[onepassword]
+  {{- if $devcontainer }}
+  mode = "service-account"
+  {{- else }}
+  mode = "account"
+  {{- end }}
