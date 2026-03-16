@@ -1,3 +1,6 @@
 {{- if stat (joinPath .chezmoi.homeDir ".cargo/env") }}
 . "$HOME/.cargo/env"
 {{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+export OP_SERVICE_ACCOUNT_TOKEN="{{ onepasswordRead "op://dev/devcontainer-service-account/credential" }}"
+{{- end }}
