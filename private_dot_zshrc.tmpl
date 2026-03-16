@@ -36,6 +36,7 @@ esac
 # =============================================================================
 # plugins (antigen)
 # =============================================================================
+{{- if eq .chezmoi.os "darwin" }}
 source "$(brew --prefix antigen)/share/antigen/antigen.zsh"
 source "$HOME/.zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh"
 
@@ -45,7 +46,7 @@ antigen bundle command-not-found
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
-
+{{- end }}
 # =============================================================================
 # prompt
 # =============================================================================
