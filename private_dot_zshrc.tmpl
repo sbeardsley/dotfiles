@@ -84,18 +84,10 @@ devclean() {
   git clean -xfd "${args[@]}" "$@"
 }
 
-# spin up a devcontainer template
-devc() {
-  local template="${1:?Usage: devc <template> [command]}"
-  local cmd="${2:-bash}"
-  local config="$HOME/.devcontainers/$template/devcontainer.json"
-  if [[ ! -f "$config" ]]; then
-    echo "No template found: $template"
-    echo "Available: $(ls $HOME/.devcontainers/)"
-    return 1
-  fi
-  devcontainer up --workspace-folder . --config "$config"
-  devcontainer exec --workspace-folder . --config "$config" "$cmd"
+function tmexclude() {
+    local target="${1:-.}"
+    tmutil addexclusion -v "$target"
+    echo "Excluded: $target"
 }
 
 # =============================================================================
