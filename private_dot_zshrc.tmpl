@@ -13,9 +13,9 @@ compinit
 # =============================================================================
 # environment
 # =============================================================================
-export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-export ENABLE_LSP_TOOLS=1
-export CC_TOOLKIT_DIR="$HOME/cc-toolkit"
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-$HOME/.1password/agent.sock}"
+export ENABLE_LSP_TOOLS="${ENABLE_LSP_TOOLS:-1}"
+export CC_TOOLKIT_DIR="${CC_TOOLKIT_DIR:-$HOME/cc-toolkit}"
 
 # =============================================================================
 # path
@@ -50,7 +50,7 @@ antigen apply
 # =============================================================================
 # prompt
 # =============================================================================
-eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/themes/M365Princess.omp.json")"
+command -v oh-my-posh &>/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/themes/M365Princess.omp.json")"
 
 # =============================================================================
 # aliases
@@ -62,8 +62,8 @@ alias peon="bash $HOME/.claude/hooks/peon-ping/peon.sh"
 # =============================================================================
 # sources
 # =============================================================================
-source "$CC_TOOLKIT_DIR/shell-aliases.sh"
-source "$HOME/.config/broot/launcher/bash/br"
+[[ -f "$CC_TOOLKIT_DIR/shell-aliases.sh" ]] && source "$CC_TOOLKIT_DIR/shell-aliases.sh"
+[[ -f "$HOME/.config/broot/launcher/bash/br" ]] && source "$HOME/.config/broot/launcher/bash/br"
 [[ -f "$HOME/.claude/hooks/peon-ping/completions.bash" ]] && \
   source "$HOME/.claude/hooks/peon-ping/completions.bash"
 
@@ -93,4 +93,4 @@ function tmexclude() {
 # =============================================================================
 # tools
 # =============================================================================
-eval "$(zoxide init zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
